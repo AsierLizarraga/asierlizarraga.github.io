@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asier Lizarraga · Business Intelligence y análisis de datos</title>
+  <meta name="description" content="Portfolio de Asier Lizarraga, ingeniero informático especializado en minería de datos y Business Intelligence. Cuadros de mando interactivos en Tableau Public sobre el sector del automóvil en España y Europa.">
+  <meta name="author" content="Asier Lizarraga">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Asier Lizarraga · Business Intelligence y análisis de datos">
+  <meta property="og:description" content="Cuadros de mando interactivos en Tableau Public sobre matriculaciones, parque, transferencias y emisiones de CO₂ de vehículos.">
+  <meta name="theme-color" content="#f6f3ec" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1519" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23157a55'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' fill='%23fff' text-anchor='middle'%3EAL%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://public.tableau.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Iconos -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.064 2.064 0 1 1 0-4.128 2.064 2.064 0 0 1 0 4.128zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></symbol>
+  <symbol id="i-bluesky" viewBox="0 0 24 24"><path fill="currentColor" d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></symbol>
+  <symbol id="i-tableau" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round"><path stroke-width="2.4" d="M12 5.5v13M5.5 12h13"/><path stroke-width="1.7" d="M4.5 2v5M2 4.5h5M19.5 2v5M17 4.5h5M4.5 17v5M2 19.5h5M19.5 17v5M17 19.5h5"/></g></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.2v13.6a.8.8 0 0 0 1.2.7l10.6-6.8a.8.8 0 0 0 0-1.4L9.2 4.5A.8.8 0 0 0 8 5.2z"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></g></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></g></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.66 3.13 3 7 3s7-1.34 7-3V6M5 12c0 1.66 3.13 3 7 3s7-1.34 7-3"/></g></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 6.5 8.5 6 8.5-6"/></g></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5v-3a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3.5a1 1 0 0 1-1-1v-3.2a2 2 0 0 1 .6-1.4L5 9.5l1.6-3.2A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.8 1.3L19 9.5l1.9 1.9a2 2 0 0 1 .6 1.4V16a1 1 0 0 1-1 1H19M5 9.5h14M9.5 17h5"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/></g></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></g></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></g></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/></g></symbol>
+</svg>
+
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<header class="site-header" data-header>
+  <div class="wrap site-header__inner">
+    <a class="brand" href="#inicio" aria-label="Asier Lizarraga, inicio">
+      <span class="brand__mark" aria-hidden="true">AL</span>
+      <span class="brand__name">Asier Lizarraga</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+      <svg aria-hidden="true"><use href="#i-menu"/></svg>
+      <span class="visually-hidden">Abrir menú</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Principal">
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#proyecto">Proyecto</a>
+      <a href="#cuadros">Cuadros de mando</a>
+      <a href="#informes">Informes</a>
+      <a href="#videos">Vídeos</a>
+      <a href="#referidos">Referidos</a>
+      <a href="#contacto" class="site-nav__cta">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="inicio">
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <p class="eyebrow">Business Intelligence · Análisis de datos · Navarra</p>
+        <h1 class="hero__title">Asier Lizarraga</h1>
+        <p class="hero__lead">
+          Ingeniero informático especializado en <strong>minería de datos</strong> y <strong>Business Intelligence</strong>.
+          Transformo los microdatos públicos de la DGT y de la Agencia Europea de Medio Ambiente en
+          cuadros de mando interactivos que explican cómo se mueve el mercado del automóvil.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#cuadros">
+            Explorar los cuadros de mando
+            <svg aria-hidden="true"><use href="#i-arrow-down"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="https://public.tableau.com/app/profile/asierlizarraga/vizzes" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-tableau"/></svg>
+            Tableau Public
+          </a>
+        </div>
+        <ul class="social" aria-label="Redes">
+          <li><a href="https://www.linkedin.com/in/asierlizarraga/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
+          <li><a href="https://bsky.app/profile/asierliz.bsky.social" target="_blank" rel="noopener" aria-label="Bluesky"><svg aria-hidden="true"><use href="#i-bluesky"/></svg></a></li>
+          <li><a href="https://public.tableau.com/app/profile/asierlizarraga/vizzes" target="_blank" rel="noopener" aria-label="Tableau Public"><svg aria-hidden="true"><use href="#i-tableau"/></svg></a></li>
+          <li><a href="https://www.youtube.com/playlist?list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" aria-label="YouTube"><svg aria-hidden="true"><use href="#i-youtube"/></svg></a></li>
+        </ul>
+      </div>
+
+      <div class="hero__visual">
+        <a class="window" href="#matriculaciones-turismos" aria-label="Ir al cuadro de mando de matriculaciones de turismos">
+          <span class="window__bar" aria-hidden="true">
+            <span class="window__dots"><i></i><i></i><i></i></span>
+            <span class="window__url">public.tableau.com/app/profile/asierlizarraga</span>
+          </span>
+          <img src="img/portada-matriculaciones-turismos.png" width="986" height="870"
+               alt="Portada del cuadro de mando de análisis de las tendencias en la venta de vehículos en España">
+        </a>
+        <div class="hero__avatar">
+          <span aria-hidden="true">AL</span>
+          <img src="https://cdn.bsky.app/img/avatar/plain/did:plc:lv24jdwspft3kmgih5a46ckm/bafkreidekd4o7rpi4wyzg2m7exektb7lhmhihnk2raxl2v7juetff7iifq"
+               alt="Foto de Asier Lizarraga" width="1000" height="1000" onerror="this.remove()">
+        </div>
+        <p class="hero__badge">
+          <span class="hero__badge-num">+15.000</span>
+          <span>visualizaciones en Tableau&nbsp;Public</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <dl class="kpis">
+        <div class="kpi"><dt>Proyectos de análisis</dt><dd>5</dd></div>
+        <div class="kpi"><dt>Cuadros de mando interactivos</dt><dd>26</dd></div>
+        <div class="kpi"><dt>Años de matriculaciones analizados</dt><dd>2015–hoy</dd></div>
+        <div class="kpi"><dt>Actualización de los datos</dt><dd>Mensual</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE MÍ ============ -->
+  <section class="section" id="sobre-mi" aria-labelledby="sobre-mi-title">
+    <div class="wrap about">
+      <div class="about__intro">
+        <p class="eyebrow">Sobre mí</p>
+        <h2 class="section__title" id="sobre-mi-title">Datos, <em>analítica de datos</em> y cuadros de mando</h2>
+        <div class="prose">
+          <p>
+            Soy ingeniero en Informática por la Universidad Pública de Navarra (2010) y me he especializado en
+            minería de datos y Business Intelligence. Actualmente trabajo como técnico de sistemas en el
+            <strong>Servicio de Avance Digital del Gobierno de Navarra</strong>, donde desarrollo y gestiono proyectos
+            de BI con la plataforma Microsoft —Integration Services, Analysis Services con cubos OLAP y
+            Reporting Services— y con <strong>Tableau</strong>.
+          </p>
+          <p>
+            Desde 2022 soy también <strong>profesor asociado</strong> en el Departamento de Estadística, Informática y
+            Matemáticas de la
+            <a href="https://www.unavarra.es/pdi/?uid=812558&amp;dato=descripcion" target="_blank" rel="noopener">Universidad Pública de Navarra (UPNA)</a>,
+            en el área de Ciencia de la Computación e Inteligencia Artificial, donde imparto las prácticas de
+            <em>Bases de Datos I</em>.
+          </p>
+          <p>
+            Mi formación combina el análisis inteligente de datos y las finanzas: soy Máster en Soft Computing and
+            Intelligent Data Analysis y Máster en Mercados Financieros Internacionales. Antes trabajé en proyectos de
+            analítica de marketing y machine learning, y en sistemas de generación de reglas de trading.
+          </p>
+          <p>
+            Fuera del trabajo me apasionan los <strong>coches eléctricos y las energías renovables</strong>, una
+            afición que se nota en los análisis que encontrarás en esta web.
+          </p>
+        </div>
+        <ul class="chips" aria-label="Competencias">
+          <li>Tableau</li>
+          <li>Microsoft BI</li>
+          <li>SSIS</li>
+          <li>SSAS · cubos OLAP</li>
+          <li>SSRS</li>
+          <li>Bases de datos y SQL</li>
+          <li>Minería de datos</li>
+          <li>Machine learning</li>
+          <li>Big Data</li>
+          <li>Predicción (forecasting)</li>
+        </ul>
+      </div>
+
+      <div class="about__cv">
+        <h3 class="cv__title">Trayectoria</h3>
+        <ol class="timeline">
+          <li>
+            <span class="timeline__when">Actualidad</span>
+            <strong>Técnico de sistemas · Business Intelligence</strong>
+            <span>Gobierno de Navarra · Servicio de Avance Digital</span>
+          </li>
+          <li>
+            <span class="timeline__when">2022 – hoy</span>
+            <strong>Profesor asociado · Bases de Datos I</strong>
+            <span>Universidad Pública de Navarra · Dpto. de Estadística, Informática y Matemáticas</span>
+            <a class="timeline__link" href="https://www.unavarra.es/pdi/?uid=812558&amp;dato=descripcion" target="_blank" rel="noopener">Ver mi ficha en la UPNA<svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+          </li>
+          <li>
+            <span class="timeline__when">2014 – 2017</span>
+            <strong>Sistemas de generación de reglas de trading</strong>
+            <span>Actiotrade (startup)</span>
+          </li>
+          <li>
+            <span class="timeline__when">2011 – 2012</span>
+            <strong>Analítica de marketing y machine learning</strong>
+            <span>Cognodata Consulting</span>
+          </li>
+        </ol>
+
+        <h3 class="cv__title">Formación</h3>
+        <ol class="timeline timeline--edu">
+          <li>
+            <span class="timeline__when">2014</span>
+            <strong>Máster en Mercados Financieros Internacionales</strong>
+            <span>UNED</span>
+          </li>
+          <li>
+            <span class="timeline__when">2011</span>
+            <strong>Máster en Soft Computing and Intelligent Data Analysis</strong>
+            <span>Universidad de Oviedo · European Centre for Soft Computing</span>
+          </li>
+          <li>
+            <span class="timeline__when">2010</span>
+            <strong>Ingeniería en Informática</strong>
+            <span>Universidad Pública de Navarra</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROYECTO ============ -->
+  <section class="section section--tinted" id="proyecto" aria-labelledby="proyecto-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">El proyecto</p>
+        <h2 class="section__title" id="proyecto-title">Proyecto de análisis del automóvil en España</h2>
+        <p class="section__lead">
+          Un proyecto de análisis gráfico e iterativo del sector automotriz español: matriculaciones de vehículos
+          nuevos, parque de vehículos y transferencias en el mercado de ocasión, completado con las emisiones de
+          CO₂ de los coches nuevos en Europa. Todo se construye sobre <strong>microdatos oficiales</strong> de la
+          Dirección General de Tráfico (DGT) y de la Agencia Europea de Medio Ambiente (EEA), y se actualiza cada vez
+          que se publican datos nuevos.
+        </p>
+      </header>
+
+      <ol class="projects">
+        <li>
+          <a class="project-card" href="#matriculaciones-turismos">
+            <span class="project-card__img"><img src="img/portada-matriculaciones-turismos.png" width="986" height="870" alt="" loading="lazy"></span>
+            <span class="project-card__num">01</span>
+            <strong class="project-card__title">Matriculaciones de turismos y todoterrenos</strong>
+            <span class="project-card__meta">2015 – hoy · Mensual</span>
+          </a>
+        </li>
+        <li>
+          <a class="project-card" href="#matriculaciones-otros">
+            <span class="project-card__img"><img src="img/portada-matriculaciones-otros.png" width="1298" height="1145" alt="" loading="lazy"></span>
+            <span class="project-card__num">02</span>
+            <strong class="project-card__title">Matriculaciones del resto de vehículos</strong>
+            <span class="project-card__meta">2015 – hoy · Mensual</span>
+          </a>
+        </li>
+        <li>
+          <a class="project-card" href="#parque">
+            <span class="project-card__img"><img src="img/portada-parque.png" width="1298" height="1145" alt="" loading="lazy"></span>
+            <span class="project-card__num">03</span>
+            <strong class="project-card__title">Parque automovilístico en España</strong>
+            <span class="project-card__meta">2021 – 2025 · Anual</span>
+          </a>
+        </li>
+        <li>
+          <a class="project-card" href="#transferencias">
+            <span class="project-card__img"><img src="img/portada-transferencias.png" width="1164" height="1027" alt="" loading="lazy"></span>
+            <span class="project-card__num">04</span>
+            <strong class="project-card__title">Transferencias de turismos y todoterrenos</strong>
+            <span class="project-card__meta">2022 – hoy · Mensual</span>
+          </a>
+        </li>
+        <li>
+          <a class="project-card" href="#co2-europa">
+            <span class="project-card__img"><img src="img/co2-europa-2024.png" width="1298" height="687" alt="" loading="lazy"></span>
+            <span class="project-card__num">05</span>
+            <strong class="project-card__title">Emisiones de CO₂ por países de Europa</strong>
+            <span class="project-card__meta">2023 y 2024 · Anual</span>
+          </a>
+        </li>
+      </ol>
+
+      <div class="sources">
+        <h3 class="sources__title">Fuentes de datos</h3>
+        <div class="table-scroll">
+          <table class="sources__table">
+            <thead>
+              <tr><th scope="col">Organismo</th><th scope="col">Conjunto de datos</th><th scope="col">Publicación</th><th scope="col">Proyectos</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>DGT</td>
+                <td><a href="https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Microdatos-de-Matriculaciones-de-Vehiculos-mensual/" target="_blank" rel="noopener">Microdatos de matriculaciones de vehículos</a></td>
+                <td>Mensual, cada día 15</td>
+                <td>01 · 02</td>
+              </tr>
+              <tr>
+                <td>DGT</td>
+                <td><a href="https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Microdatos-de-parque-de-vehiculos-Anual/" target="_blank" rel="noopener">Microdatos de parque de vehículos</a></td>
+                <td>Anual, hacia abril</td>
+                <td>03</td>
+              </tr>
+              <tr>
+                <td>DGT</td>
+                <td><a href="https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Microdatos-de-Transferencias-de-Vehiculos-mensual/" target="_blank" rel="noopener">Microdatos de transferencias de vehículos</a></td>
+                <td>Mensual, cada día 15</td>
+                <td>04</td>
+              </tr>
+              <tr>
+                <td>EEA</td>
+                <td><a href="https://www.eea.europa.eu/en/datahub/datahubitem-view/fa8b1229-3db6-495d-b18e-9c9b3267c02b?activeAccordion=1094576" target="_blank" rel="noopener">CO₂ emissions from new passenger cars</a></td>
+                <td>Anual</td>
+                <td>05</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="sources__note">Los cuadros de mando de Tableau se actualizan con la misma frecuencia con la que se publica cada fuente.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CUADROS DE MANDO ============ -->
+  <section class="section" id="cuadros" aria-labelledby="cuadros-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Cuadros de mando</p>
+        <h2 class="section__title" id="cuadros-title">Explóralos aquí mismo</h2>
+        <p class="section__lead">
+          Cada cuadro de mando está incrustado desde Tableau Public y es totalmente interactivo: usa las pestañas
+          para cambiar de análisis, filtra, pasa el ratón por los gráficos o ábrelo a pantalla completa.
+        </p>
+        <p class="mobile-hint">
+          En pantallas pequeñas el cuadro se muestra reducido. Pulsa <b>100 %</b> para desplazarte por él
+          o ábrelo directamente en Tableau Public.
+        </p>
+      </header>
+    </div>
+
+    <!-- 01 · Matriculaciones de turismos -->
+    <article class="dash" id="matriculaciones-turismos" aria-labelledby="dash-1-title">
+      <div class="wrap dash__intro">
+        <div class="dash__head">
+          <span class="dash__num" aria-hidden="true">01</span>
+          <div>
+            <p class="eyebrow">Matriculaciones · Vehículos nuevos</p>
+            <h3 class="dash__title" id="dash-1-title">Matriculaciones de turismos y todoterrenos nuevos</h3>
+          </div>
+        </div>
+        <div class="dash__body">
+          <p class="dash__lead">
+            Analiza la venta de turismos y todoterrenos nuevos en España desde 2015. La portada resume el mercado
+            —evolución de las matriculaciones, peso del renting, emisiones medias de CO₂, mix de motorizaciones y
+            despegue del vehículo eléctrico— y da acceso a seis cuadros de mando temáticos.
+          </p>
+          <ul class="meta">
+            <li><svg aria-hidden="true"><use href="#i-calendar"/></svg><span><b>Periodo</b> 2015 – actualidad</span></li>
+            <li><svg aria-hidden="true"><use href="#i-refresh"/></svg><span><b>Actualización</b> mensual, cada día 15</span></li>
+            <li><svg aria-hidden="true"><use href="#i-database"/></svg><span><b>Fuente</b> <a href="https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Microdatos-de-Matriculaciones-de-Vehiculos-mensual/" target="_blank" rel="noopener">DGT · Microdatos de matriculaciones</a></span></li>
+          </ul>
+          <div class="video-links">
+            <a class="video-link" href="https://www.youtube.com/watch?v=NUi1yVtjKik&amp;list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-video="NUi1yVtjKik" data-video-title="Matriculaciones de turismos: análisis YTD"><svg aria-hidden="true"><use href="#i-play"/></svg>Vídeo: análisis YTD</a>
+            <a class="video-link" href="https://www.youtube.com/watch?v=PxlBhBnZQww&amp;list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-video="PxlBhBnZQww" data-video-title="Matriculaciones de turismos: resto de cuadros de mando"><svg aria-hidden="true"><use href="#i-play"/></svg>Vídeo: resto de cuadros</a>
+          </div>
+        </div>
+        <div class="stats">
+          <p class="stats__label">Algunas cifras del cuadro · cierre de 2025</p>
+          <ul class="stats__grid">
+            <li class="stat"><span class="stat__value">8,76&nbsp;%</span><span class="stat__text">cuota de eléctricos (BEV) en 2025, frente al 0,11&nbsp;% de 2015</span></li>
+            <li class="stat"><span class="stat__value">6,65&nbsp;%</span><span class="stat__text">de las matriculaciones son diésel; en 2015 eran el 63,44&nbsp;%</span></li>
+            <li class="stat"><span class="stat__value">104,2<small> g/km</small></span><span class="stat__text">de CO₂ de media por vehículo nuevo, un 19,8&nbsp;% menos que en 2021</span></li>
+            <li class="stat"><span class="stat__value">24,45&nbsp;%</span><span class="stat__text">de las ventas van a renting (10,81&nbsp;% en 2015)</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wrap-wide">
+        <div class="viz" data-workbook="Analisisdematriculacionesdeturismosytodoterrenosnuevos" data-profile="asierlizarraga" data-title="Matriculaciones de turismos y todoterrenos nuevos" data-w="1700" data-h="1527">
+          <div class="tabs" role="tablist" aria-label="Cuadros de mando de matriculaciones de turismos y todoterrenos">
+            <button type="button" role="tab" aria-selected="true" data-sheet="1-PORTADA" data-desc="Visión general del mercado con botones que dan acceso al resto de análisis temáticos.">Portada</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="1-ANALISISYTD" data-desc="Comparativa year to date (YTD) de la variación de las matriculaciones por tipo de motorización, marca, provincia…">Análisis YTD</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="6-ANALISISPROVINCIA" data-desc="Compara provincias por emisiones medias de CO₂ de las nuevas matriculaciones, porcentaje de eléctricos (BEV) y cuota de marcas y grupos automovilísticos.">Por provincia</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="2-ANALISISMENSUAL" data-desc="Matriculaciones mensuales por marca y modelo, con selector de métrica: unidades, emisiones medias de CO₂, matriculaciones BEV…">Mensual por marcas</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="3-ANALISISGRUPO" data-desc="Matriculaciones mensuales por grupo automovilístico y marca, con el mismo selector de métricas.">Mensual por grupo</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="4-ANALISISBEV" data-desc="Matriculaciones de vehículos 100 % eléctricos por marca, modelo y provincia. Permite analizar BEV, híbridos enchufables (PHEV) o ambos.">Eléctricos (BEV)</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="5-ANALISISBEVPORPROVINCIA" data-desc="Matriculaciones de eléctricos por municipio y provincia, con selector BEV, PHEV o BEV + PHEV.">BEV por provincia</button>
+          </div>
+          <div class="viz__bar">
+            <p class="viz__desc" aria-live="polite">Visión general del mercado con botones que dan acceso al resto de análisis temáticos.</p>
+            <div class="viz__tools">
+              <div class="seg" role="group" aria-label="Tamaño del cuadro de mando">
+                <button type="button" data-zoom="fit" aria-pressed="true">Ajustar</button>
+                <button type="button" data-zoom="real" aria-pressed="false">100&nbsp;%</button>
+              </div>
+              <button type="button" class="tool" data-fullscreen><svg aria-hidden="true"><use href="#i-expand"/></svg><span>Pantalla completa</span></button>
+              <a class="tool" data-open href="https://public.tableau.com/app/profile/asierlizarraga/viz/Analisisdematriculacionesdeturismosytodoterrenosnuevos/1-PORTADA" target="_blank" rel="noopener"><span>Abrir en Tableau Public</span><svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+            </div>
+          </div>
+          <div class="viz__screen">
+            <div class="viz__stage">
+              <iframe src="https://public.tableau.com/views/Analisisdematriculacionesdeturismosytodoterrenosnuevos/1-PORTADA?:embed=y&amp;:showVizHome=no&amp;:display_count=n&amp;:tabs=n&amp;:toolbar=yes&amp;:device=desktop&amp;:language=es-ES"
+                      title="Cuadro de mando de Tableau: Portada — Matriculaciones de turismos y todoterrenos nuevos"
+                      width="1700" height="1527" loading="lazy" allowfullscreen></iframe>
+              <div class="viz__loading" aria-hidden="true"><span class="spinner"></span>Cargando cuadro de mando…</div>
+            </div>
+            <button type="button" class="viz__exit" data-exit hidden><svg aria-hidden="true"><use href="#i-close"/></svg>Salir</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 · Matriculaciones del resto de vehículos -->
+    <article class="dash" id="matriculaciones-otros" aria-labelledby="dash-2-title">
+      <div class="wrap dash__intro">
+        <div class="dash__head">
+          <span class="dash__num" aria-hidden="true">02</span>
+          <div>
+            <p class="eyebrow">Matriculaciones · Vehículos nuevos</p>
+            <h3 class="dash__title" id="dash-2-title">Matriculaciones del resto de vehículos</h3>
+          </div>
+        </div>
+        <div class="dash__body">
+          <p class="dash__lead">
+            El complemento del anterior: analiza la venta de vehículos nuevos que no son turismos ni todoterrenos
+            —autobuses, motocicletas, camiones, furgonetas…— desde 2015. Mantiene la misma estructura: una portada
+            con la visión general del mercado y seis cuadros de mando temáticos, con filtro por tipo de vehículo.
+          </p>
+          <ul class="meta">
+            <li><svg aria-hidden="true"><use href="#i-calendar"/></svg><span><b>Periodo</b> 2015 – actualidad</span></li>
+            <li><svg aria-hidden="true"><use href="#i-refresh"/></svg><span><b>Actualización</b> mensual, cada día 15</span></li>
+            <li><svg aria-hidden="true"><use href="#i-database"/></svg><span><b>Fuente</b> <a href="https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Microdatos-de-Matriculaciones-de-Vehiculos-mensual/" target="_blank" rel="noopener">DGT · Microdatos de matriculaciones</a></span></li>
+          </ul>
+          <div class="video-links">
+            <a class="video-link" href="https://www.youtube.com/watch?v=Z9wNMkbIz1A&amp;list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-video="Z9wNMkbIz1A" data-video-title="Matriculaciones exceptuando turismos y todoterrenos"><svg aria-hidden="true"><use href="#i-play"/></svg>Vídeo explicativo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap-wide">
+        <div class="viz" data-workbook="Analisisdematriculacionesexceptuandoturismosytodoterrenos" data-profile="asierlizarraga" data-title="Matriculaciones del resto de vehículos" data-w="1700" data-h="1527">
+          <div class="tabs" role="tablist" aria-label="Cuadros de mando de matriculaciones del resto de vehículos">
+            <button type="button" role="tab" aria-selected="true" data-sheet="1-PORTADA" data-desc="Visión general del mercado de autobuses, motocicletas, camiones y resto de vehículos, con acceso a los análisis temáticos.">Portada</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="1-ANALISISYTD" data-desc="Comparativa YTD de la variación de las matriculaciones por tipo de motorización, marca, provincia…">Análisis YTD</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="6-ANALISISPROVINCIA" data-desc="Comparación entre provincias: emisiones medias de CO₂, porcentaje de eléctricos (BEV) y cuota por marca o grupo automovilístico.">Por provincia</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="2-ANALISISMENSUAL" data-desc="Matriculaciones mensuales por marca y modelo, con selector de métrica.">Mensual por marcas</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="3-ANALISISGRUPO" data-desc="Matriculaciones mensuales por grupo automovilístico y marca, con selector de métrica.">Mensual por grupo</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="4-ANALISISBEV" data-desc="Matriculaciones de eléctricos por marca, modelo y provincia: BEV, PHEV o ambos.">Eléctricos (BEV)</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="5-ANALISISBEVPORPROVINCIA" data-desc="Matriculaciones de eléctricos por municipio y provincia: BEV, PHEV o ambos.">BEV por provincia</button>
+          </div>
+          <div class="viz__bar">
+            <p class="viz__desc" aria-live="polite">Visión general del mercado de autobuses, motocicletas, camiones y resto de vehículos, con acceso a los análisis temáticos.</p>
+            <div class="viz__tools">
+              <div class="seg" role="group" aria-label="Tamaño del cuadro de mando">
+                <button type="button" data-zoom="fit" aria-pressed="true">Ajustar</button>
+                <button type="button" data-zoom="real" aria-pressed="false">100&nbsp;%</button>
+              </div>
+              <button type="button" class="tool" data-fullscreen><svg aria-hidden="true"><use href="#i-expand"/></svg><span>Pantalla completa</span></button>
+              <a class="tool" data-open href="https://public.tableau.com/app/profile/asierlizarraga/viz/Analisisdematriculacionesexceptuandoturismosytodoterrenos/1-PORTADA" target="_blank" rel="noopener"><span>Abrir en Tableau Public</span><svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+            </div>
+          </div>
+          <div class="viz__screen">
+            <div class="viz__stage">
+              <iframe src="https://public.tableau.com/views/Analisisdematriculacionesexceptuandoturismosytodoterrenos/1-PORTADA?:embed=y&amp;:showVizHome=no&amp;:display_count=n&amp;:tabs=n&amp;:toolbar=yes&amp;:device=desktop&amp;:language=es-ES"
+                      title="Cuadro de mando de Tableau: Portada — Matriculaciones del resto de vehículos"
+                      width="1700" height="1527" loading="lazy" allowfullscreen></iframe>
+              <div class="viz__loading" aria-hidden="true"><span class="spinner"></span>Cargando cuadro de mando…</div>
+            </div>
+            <button type="button" class="viz__exit" data-exit hidden><svg aria-hidden="true"><use href="#i-close"/></svg>Salir</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 03 · Parque automovilístico -->
+    <article class="dash" id="parque" aria-labelledby="dash-3-title">
+      <div class="wrap dash__intro">
+        <div class="dash__head">
+          <span class="dash__num" aria-hidden="true">03</span>
+          <div>
+            <p class="eyebrow">Parque de vehículos</p>
+            <h3 class="dash__title" id="dash-3-title">El parque automovilístico en España</h3>
+          </div>
+        </div>
+        <div class="dash__body">
+          <p class="dash__lead">
+            Analiza todos los vehículos en circulación en España a último día de cada año, de 2021 a 2025:
+            distintivo ambiental, antigüedad, emisiones medias de CO₂ y año de primera matriculación. La portada
+            da acceso a dos cuadros de mando: la evolución anual del parque y un análisis por motorización, marca
+            y provincia.
+          </p>
+          <ul class="meta">
+            <li><svg aria-hidden="true"><use href="#i-calendar"/></svg><span><b>Periodo</b> 2021 – 2025, a 31 de diciembre</span></li>
+            <li><svg aria-hidden="true"><use href="#i-refresh"/></svg><span><b>Actualización</b> anual, hacia abril</span></li>
+            <li><svg aria-hidden="true"><use href="#i-database"/></svg><span><b>Fuente</b> <a href="https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Microdatos-de-parque-de-vehiculos-Anual/" target="_blank" rel="noopener">DGT · Microdatos de parque de vehículos</a></span></li>
+          </ul>
+          <div class="video-links">
+            <a class="video-link" href="https://www.youtube.com/watch?v=QEQqzFpberQ&amp;list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-video="QEQqzFpberQ" data-video-title="Parque automovilístico de España"><svg aria-hidden="true"><use href="#i-play"/></svg>Vídeo explicativo</a>
+            <a class="video-link" href="https://www.youtube.com/watch?v=5evyrgO3D9c&amp;t=41s" target="_blank" rel="noopener" data-video="5evyrgO3D9c" data-video-start="41" data-video-title="El parque automovilístico, con Luis Valdés"><svg aria-hidden="true"><use href="#i-play"/></svg>Vídeo con Luis Valdés</a>
+          </div>
+        </div>
+        <div class="stats">
+          <p class="stats__label">Algunas cifras del cuadro · parque a 31/12/2025</p>
+          <ul class="stats__grid">
+            <li class="stat"><span class="stat__value">38,64<small> M</small></span><span class="stat__text">de vehículos forman el parque español</span></li>
+            <li class="stat"><span class="stat__value">15,87<small> años</small></span><span class="stat__text">de antigüedad media: un parque muy envejecido</span></li>
+            <li class="stat"><span class="stat__value">2,16&nbsp;%</span><span class="stat__text">tiene etiqueta CERO (1,14&nbsp;% BEV y 1,02&nbsp;% híbridos enchufables)</span></li>
+            <li class="stat"><span class="stat__value">104,9<small> g/km</small></span><span class="stat__text">de CO₂ de media en el parque (112,66 en turismos)</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wrap-wide">
+        <div class="viz" data-workbook="AnlisisdelparqueautomovilsticoenEspaa" data-profile="asierlizarraga" data-title="Parque automovilístico en España" data-w="1700" data-h="1527">
+          <div class="tabs" role="tablist" aria-label="Cuadros de mando del parque automovilístico">
+            <button type="button" role="tab" aria-selected="true" data-sheet="AnlisisdelparqueautomovilsticoenEspaa" data-desc="Foto del parque a 31 de diciembre: distintivo ambiental, antigüedad media, emisiones de CO₂ y año de primera matriculación.">Portada</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="Parqueporaos" data-desc="Composición del parque en cada año por tipo de motorización y fecha de matriculación. Cada fila representa el parque a último día del año.">Evolución por años</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="DashboardMensual" data-desc="Métricas del parque por motorización, marca, provincia…, con selector de métrica: número de vehículos, emisiones medias de CO₂, antigüedad…">Análisis del parque</button>
+          </div>
+          <div class="viz__bar">
+            <p class="viz__desc" aria-live="polite">Foto del parque a 31 de diciembre: distintivo ambiental, antigüedad media, emisiones de CO₂ y año de primera matriculación.</p>
+            <div class="viz__tools">
+              <div class="seg" role="group" aria-label="Tamaño del cuadro de mando">
+                <button type="button" data-zoom="fit" aria-pressed="true">Ajustar</button>
+                <button type="button" data-zoom="real" aria-pressed="false">100&nbsp;%</button>
+              </div>
+              <button type="button" class="tool" data-fullscreen><svg aria-hidden="true"><use href="#i-expand"/></svg><span>Pantalla completa</span></button>
+              <a class="tool" data-open href="https://public.tableau.com/app/profile/asierlizarraga/viz/AnlisisdelparqueautomovilsticoenEspaa/AnlisisdelparqueautomovilsticoenEspaa" target="_blank" rel="noopener"><span>Abrir en Tableau Public</span><svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+            </div>
+          </div>
+          <div class="viz__screen">
+            <div class="viz__stage">
+              <iframe src="https://public.tableau.com/views/AnlisisdelparqueautomovilsticoenEspaa/AnlisisdelparqueautomovilsticoenEspaa?:embed=y&amp;:showVizHome=no&amp;:display_count=n&amp;:tabs=n&amp;:toolbar=yes&amp;:device=desktop&amp;:language=es-ES"
+                      title="Cuadro de mando de Tableau: Portada — Parque automovilístico en España"
+                      width="1700" height="1527" loading="lazy" allowfullscreen></iframe>
+              <div class="viz__loading" aria-hidden="true"><span class="spinner"></span>Cargando cuadro de mando…</div>
+            </div>
+            <button type="button" class="viz__exit" data-exit hidden><svg aria-hidden="true"><use href="#i-close"/></svg>Salir</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 04 · Transferencias -->
+    <article class="dash" id="transferencias" aria-labelledby="dash-4-title">
+      <div class="wrap dash__intro">
+        <div class="dash__head">
+          <span class="dash__num" aria-hidden="true">04</span>
+          <div>
+            <p class="eyebrow">Mercado de ocasión</p>
+            <h3 class="dash__title" id="dash-4-title">Transferencias de turismos y todoterrenos</h3>
+          </div>
+        </div>
+        <div class="dash__body">
+          <p class="dash__lead">
+            Analiza el mercado de ocasión: las transferencias de turismos y todoterrenos en España desde 2022.
+            Sigue la misma estructura que el análisis de matriculaciones —portada con la visión general y seis
+            cuadros de mando temáticos—, añadiendo la antigüedad media del vehículo transferido.
+          </p>
+          <ul class="meta">
+            <li><svg aria-hidden="true"><use href="#i-calendar"/></svg><span><b>Periodo</b> 2022 – actualidad</span></li>
+            <li><svg aria-hidden="true"><use href="#i-refresh"/></svg><span><b>Actualización</b> mensual, cada día 15</span></li>
+            <li><svg aria-hidden="true"><use href="#i-database"/></svg><span><b>Fuente</b> <a href="https://www.dgt.es/menusecundario/dgt-en-cifras/dgt-en-cifras-resultados/dgt-en-cifras-detalle/Microdatos-de-Transferencias-de-Vehiculos-mensual/" target="_blank" rel="noopener">DGT · Microdatos de transferencias</a></span></li>
+          </ul>
+          <div class="video-links">
+            <a class="video-link" href="https://www.youtube.com/watch?v=uea2zyUixSU" target="_blank" rel="noopener" data-video="uea2zyUixSU" data-video-title="El mercado de segunda mano, con Luis Valdés"><svg aria-hidden="true"><use href="#i-play"/></svg>Vídeo con Luis Valdés</a>
+          </div>
+        </div>
+        <div class="stats">
+          <p class="stats__label">Algunas cifras del cuadro · cierre de 2025</p>
+          <ul class="stats__grid">
+            <li class="stat"><span class="stat__value">3,36<small> M</small></span><span class="stat__text">de transferencias en 2025, un 33,52&nbsp;% más que en 2022</span></li>
+            <li class="stat"><span class="stat__value">48,06&nbsp;%</span><span class="stat__text">de los coches transferidos son diésel (56,1&nbsp;% en 2022)</span></li>
+            <li class="stat"><span class="stat__value">1,29&nbsp;%</span><span class="stat__text">cuota de eléctricos (BEV) en el mercado de ocasión</span></li>
+            <li class="stat"><span class="stat__value">11,7<small> años</small></span><span class="stat__text">de antigüedad media del vehículo transferido</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wrap-wide">
+        <div class="viz" data-workbook="Analisisdetrasferenciasdeturismosytodoterrenos" data-profile="asier.lizarraga.oroquieta" data-title="Transferencias de turismos y todoterrenos" data-w="1700" data-h="1527">
+          <div class="tabs" role="tablist" aria-label="Cuadros de mando de transferencias">
+            <button type="button" role="tab" aria-selected="true" data-sheet="1-PORTADA" data-desc="Visión general del mercado de ocasión: evolución de las transferencias, antigüedad media, emisiones de CO₂ y eléctricos.">Portada</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="1-ANALISISYTD" data-desc="Comparativa YTD de la variación de las transferencias por tipo de motorización, marca, provincia…">Análisis YTD</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="6-ANALISISPROVINCIA" data-desc="Comparación entre provincias: emisiones medias de CO₂, porcentaje de eléctricos y cuota por marca o grupo automovilístico.">Por provincia</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="2-ANALISISMENSUAL" data-desc="Transferencias mensuales por marca y modelo, con selector de métrica.">Mensual por marcas</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="3-ANALISISGRUPO" data-desc="Transferencias mensuales por grupo automovilístico y marca, con selector de métrica.">Mensual por grupo</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="4-ANALISISBEV" data-desc="Transferencias de eléctricos por marca, modelo y provincia: BEV, PHEV o ambos.">Eléctricos (BEV)</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-sheet="5-ANALISISBEVPORPROVINCIA" data-desc="Transferencias de eléctricos por municipio y provincia: BEV, PHEV o ambos.">BEV por provincia</button>
+          </div>
+          <div class="viz__bar">
+            <p class="viz__desc" aria-live="polite">Visión general del mercado de ocasión: evolución de las transferencias, antigüedad media, emisiones de CO₂ y eléctricos.</p>
+            <div class="viz__tools">
+              <div class="seg" role="group" aria-label="Tamaño del cuadro de mando">
+                <button type="button" data-zoom="fit" aria-pressed="true">Ajustar</button>
+                <button type="button" data-zoom="real" aria-pressed="false">100&nbsp;%</button>
+              </div>
+              <button type="button" class="tool" data-fullscreen><svg aria-hidden="true"><use href="#i-expand"/></svg><span>Pantalla completa</span></button>
+              <a class="tool" data-open href="https://public.tableau.com/app/profile/asier.lizarraga.oroquieta/viz/Analisisdetrasferenciasdeturismosytodoterrenos/1-PORTADA" target="_blank" rel="noopener"><span>Abrir en Tableau Public</span><svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+            </div>
+          </div>
+          <div class="viz__screen">
+            <div class="viz__stage">
+              <iframe src="https://public.tableau.com/views/Analisisdetrasferenciasdeturismosytodoterrenos/1-PORTADA?:embed=y&amp;:showVizHome=no&amp;:display_count=n&amp;:tabs=n&amp;:toolbar=yes&amp;:device=desktop&amp;:language=es-ES"
+                      title="Cuadro de mando de Tableau: Portada — Transferencias de turismos y todoterrenos"
+                      width="1700" height="1527" loading="lazy" allowfullscreen></iframe>
+              <div class="viz__loading" aria-hidden="true"><span class="spinner"></span>Cargando cuadro de mando…</div>
+            </div>
+            <button type="button" class="viz__exit" data-exit hidden><svg aria-hidden="true"><use href="#i-close"/></svg>Salir</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 05 · CO2 Europa -->
+    <article class="dash" id="co2-europa" aria-labelledby="dash-5-title">
+      <div class="wrap dash__intro">
+        <div class="dash__head">
+          <span class="dash__num" aria-hidden="true">05</span>
+          <div>
+            <p class="eyebrow">Europa · Emisiones</p>
+            <h3 class="dash__title" id="dash-5-title">Emisiones medias de CO₂ de los coches nuevos en Europa</h3>
+          </div>
+        </div>
+        <div class="dash__body">
+          <p class="dash__lead">
+            Analiza las emisiones medias de CO₂ de los turismos nuevos matriculados en Europa, geográficamente por
+            país y también por grupo automovilístico, marca y tipo de motorización (gasolina, diésel, híbrido…).
+            Un selector permite cambiar la métrica entre emisiones medias y matriculaciones. Hay un cuadro de mando
+            para 2024 y otro para 2023.
+          </p>
+          <ul class="meta">
+            <li><svg aria-hidden="true"><use href="#i-calendar"/></svg><span><b>Periodo</b> 2023 y 2024</span></li>
+            <li><svg aria-hidden="true"><use href="#i-refresh"/></svg><span><b>Actualización</b> anual</span></li>
+            <li><svg aria-hidden="true"><use href="#i-database"/></svg><span><b>Fuente</b> <a href="https://www.eea.europa.eu/en/datahub/datahubitem-view/fa8b1229-3db6-495d-b18e-9c9b3267c02b?activeAccordion=1094576" target="_blank" rel="noopener">European Environment Agency</a></span></li>
+          </ul>
+          <div class="video-links">
+            <a class="video-link" href="https://www.youtube.com/watch?v=5evyrgO3D9c&amp;t=41s" target="_blank" rel="noopener" data-video="5evyrgO3D9c" data-video-start="41" data-video-title="El parque automovilístico, con Luis Valdés"><svg aria-hidden="true"><use href="#i-play"/></svg>Vídeo con Luis Valdés</a>
+          </div>
+        </div>
+        <div class="stats stats--two">
+          <p class="stats__label">Algunas cifras del cuadro · año 2024</p>
+          <ul class="stats__grid">
+            <li class="stat"><span class="stat__value">10,78<small> M</small></span><span class="stat__text">de turismos nuevos matriculados en Europa</span></li>
+            <li class="stat"><span class="stat__value">106,9<small> g/km</small></span><span class="stat__text">de CO₂ de media por vehículo nuevo</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="wrap-wide">
+        <div class="viz" data-workbook="CO2mediodevehiculosporpaisesdeeuropaen2024" data-profile="asierlizarraga" data-title="Emisiones de CO₂ de los coches nuevos en Europa" data-w="1700" data-h="927">
+          <div class="tabs" role="tablist" aria-label="Cuadros de mando de emisiones de CO₂ en Europa">
+            <button type="button" role="tab" aria-selected="true" data-workbook="CO2mediodevehiculosporpaisesdeeuropaen2024" data-sheet="Dashboard1" data-desc="Año 2024: emisiones medias de CO₂ por país, grupo automovilístico, marca y tipo de motorización.">Año 2024</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-workbook="CO2mediodevehiculosporpaisesdeeuropaen2023" data-sheet="Dashboard1" data-desc="Año 2023, con la misma estructura para comparar la evolución entre años.">Año 2023</button>
+          </div>
+          <div class="viz__bar">
+            <p class="viz__desc" aria-live="polite">Año 2024: emisiones medias de CO₂ por país, grupo automovilístico, marca y tipo de motorización.</p>
+            <div class="viz__tools">
+              <div class="seg" role="group" aria-label="Tamaño del cuadro de mando">
+                <button type="button" data-zoom="fit" aria-pressed="true">Ajustar</button>
+                <button type="button" data-zoom="real" aria-pressed="false">100&nbsp;%</button>
+              </div>
+              <button type="button" class="tool" data-fullscreen><svg aria-hidden="true"><use href="#i-expand"/></svg><span>Pantalla completa</span></button>
+              <a class="tool" data-open href="https://public.tableau.com/app/profile/asierlizarraga/viz/CO2mediodevehiculosporpaisesdeeuropaen2024/Dashboard1" target="_blank" rel="noopener"><span>Abrir en Tableau Public</span><svg aria-hidden="true"><use href="#i-ext"/></svg></a>
+            </div>
+          </div>
+          <div class="viz__screen">
+            <div class="viz__stage">
+              <iframe src="https://public.tableau.com/views/CO2mediodevehiculosporpaisesdeeuropaen2024/Dashboard1?:embed=y&amp;:showVizHome=no&amp;:display_count=n&amp;:tabs=n&amp;:toolbar=yes&amp;:device=desktop&amp;:language=es-ES"
+                      title="Cuadro de mando de Tableau: Año 2024 — Emisiones de CO₂ de los coches nuevos en Europa"
+                      width="1700" height="927" loading="lazy" allowfullscreen></iframe>
+              <div class="viz__loading" aria-hidden="true"><span class="spinner"></span>Cargando cuadro de mando…</div>
+            </div>
+            <button type="button" class="viz__exit" data-exit hidden><svg aria-hidden="true"><use href="#i-close"/></svg>Salir</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div class="wrap">
+      <aside class="more">
+        <div class="more__text">
+          <p class="eyebrow">También en Tableau Public</p>
+          <h3 class="more__title">Puntos de carga en Navarra</h3>
+          <p>Un mapa de los puntos de recarga para vehículos eléctricos en Navarra. Este y el resto de mis trabajos están en mi perfil de Tableau Public.</p>
+        </div>
+        <div class="more__actions">
+          <a class="btn btn--ghost" href="https://public.tableau.com/app/profile/asierlizarraga/viz/PuntosdeCargaenNavarra/PuntosdeCargaenNavarra" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-pin"/></svg>Ver el mapa
+          </a>
+          <a class="btn btn--primary" href="https://public.tableau.com/app/profile/asierlizarraga/vizzes" target="_blank" rel="noopener">
+            Perfil completo<svg aria-hidden="true"><use href="#i-ext"/></svg>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ INFORMES ============ -->
+  <section class="section section--tinted" id="informes" aria-labelledby="informes-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Informes</p>
+        <h2 class="section__title" id="informes-title">Informes para <em>descargar</em></h2>
+        <p class="section__lead">
+          Los análisis también en formato documento: informes en PDF para leerlos con calma, llevarlos a una
+          reunión o compartirlos.
+        </p>
+      </header>
+
+      <ul class="docs">
+        <li class="doc">
+          <div class="doc__top">
+            <span class="doc__icon" aria-hidden="true"><svg><use href="#i-doc"/></svg></span>
+            <span class="doc__meta">PDF · 11 páginas · 1,3 MB</span>
+          </div>
+          <h3 class="doc__title">Análisis del Sector Automotriz Español</h3>
+          <p class="doc__text">
+            El resumen del proyecto: objetivos, fuentes de datos y los cinco cuadros de mando con sus principales
+            vistas, con enlaces directos a cada panel de Tableau Public.
+          </p>
+          <ul class="doc__tags" aria-label="Contenido del informe">
+            <li>Matriculaciones</li>
+            <li>Parque de vehículos</li>
+            <li>Transferencias</li>
+            <li>CO₂ en Europa</li>
+          </ul>
+          <a class="video-link doc__video" href="https://www.youtube.com/watch?v=dMAj68wGyVk" target="_blank" rel="noopener" data-video="dMAj68wGyVk" data-video-title="Análisis del sector automotriz"><svg aria-hidden="true"><use href="#i-play"/></svg>Vídeo: análisis del sector automotriz</a>
+          <div class="doc__actions">
+            <a class="btn btn--primary" href="https://drive.google.com/uc?export=download&amp;id=1NDiv1Eud9rDPWWgnvsKu3NapMlDfu42c" rel="noopener">
+              <svg aria-hidden="true"><use href="#i-download"/></svg>Descargar PDF
+            </a>
+            <a class="btn btn--ghost" href="https://drive.google.com/file/d/1NDiv1Eud9rDPWWgnvsKu3NapMlDfu42c/view?usp=drive_link" target="_blank" rel="noopener">
+              Ver online<svg aria-hidden="true"><use href="#i-ext"/></svg>
+            </a>
+          </div>
+        </li>
+        <li class="doc">
+          <div class="doc__top">
+            <span class="doc__icon" aria-hidden="true"><svg><use href="#i-doc"/></svg></span>
+            <span class="doc__meta">PDF · 17 páginas · 4,9 MB</span>
+          </div>
+          <h3 class="doc__title">Análisis de las Ventas de Vehículos Eléctricos (BEV) en Navarra</h3>
+          <p class="doc__text">
+            De enero a abril de 2026: cuota de mercado, marcas y modelos líderes, crecimiento interanual, emisiones
+            de CO₂ y comparación con el resto de provincias.
+          </p>
+          <ul class="doc__stats" aria-label="Algunas cifras del informe (enero–abril 2026)">
+            <li><b>25,58&nbsp;%</b><span>de cuota de eléctricos (BEV) en turismos</span></li>
+            <li><b>1.ª</b><span>provincia de España con mayor cuota BEV</span></li>
+            <li><b>85,55</b><span>g/km de CO₂ medio, el menor del país</span></li>
+          </ul>
+          <div class="doc__actions">
+            <a class="btn btn--primary" href="https://drive.google.com/uc?export=download&amp;id=1d2RSyeL38Q0UoU9DMH00UkD8vhlf8Kgn" rel="noopener">
+              <svg aria-hidden="true"><use href="#i-download"/></svg>Descargar PDF
+            </a>
+            <a class="btn btn--ghost" href="https://drive.google.com/file/d/1d2RSyeL38Q0UoU9DMH00UkD8vhlf8Kgn/view?usp=drive_link" target="_blank" rel="noopener">
+              Ver online<svg aria-hidden="true"><use href="#i-ext"/></svg>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ VÍDEOS ============ -->
+  <section class="section" id="videos" aria-labelledby="videos-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Vídeos</p>
+        <h2 class="section__title" id="videos-title">Te los explico en vídeo</h2>
+        <p class="section__lead">
+          Colaboraciones con divulgadores de la movilidad eléctrica, mi análisis del sector y recorridos guiados
+          por cada cuadro de mando.
+        </p>
+      </header>
+
+      <!-- Colaboraciones -->
+      <div class="video-block">
+        <div class="video-block__head">
+          <div>
+            <p class="eyebrow">Colaboraciones</p>
+            <h3 class="video-block__title">Con Luis Valdés</h3>
+            <p class="video-block__text">
+              Junto a Luis Valdés, experto e influencer de la movilidad eléctrica, analicé mis cuadros de mando en
+              su canal de YouTube: del mercado de segunda mano al parque automovilístico español.
+            </p>
+          </div>
+          <a class="btn btn--ghost" href="https://www.youtube.com/@LuisValdes_DatosyLetras" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-youtube"/></svg>Canal de Luis Valdés
+          </a>
+        </div>
+        <ul class="videos videos--featured">
+          <li>
+            <a class="video-card" href="https://www.youtube.com/watch?v=uea2zyUixSU" target="_blank" rel="noopener" data-video="uea2zyUixSU" data-video-title="El mercado de segunda mano, con Luis Valdés">
+              <span class="video-card__thumb">
+                <img src="https://i.ytimg.com/vi/uea2zyUixSU/hq720.jpg" alt="" width="1280" height="720" loading="lazy">
+                <span class="video-card__play" aria-hidden="true"><svg><use href="#i-play"/></svg></span>
+                <span class="video-card__duration">20:43</span>
+              </span>
+              <span class="video-card__kicker">Charlas de verano · Mercado de ocasión</span>
+              <strong>El mercado de segunda mano: todo lo que necesitabas saber</strong>
+              <span class="video-card__desc">Tamaño y composición del mercado de ocasión en España —provincias, motorizaciones, marcas y modelos— con el cuadro de mando de transferencias.</span>
+            </a>
+            <p class="video-card__related">Relacionado: <a href="#transferencias">04 · Transferencias</a></p>
+          </li>
+          <li>
+            <a class="video-card" href="https://www.youtube.com/watch?v=5evyrgO3D9c&amp;t=41s" target="_blank" rel="noopener" data-video="5evyrgO3D9c" data-video-start="41" data-video-title="El parque automovilístico, con Luis Valdés">
+              <span class="video-card__thumb">
+                <img src="https://i.ytimg.com/vi/5evyrgO3D9c/hq720.jpg" alt="" width="1280" height="720" loading="lazy">
+                <span class="video-card__play" aria-hidden="true"><svg><use href="#i-play"/></svg></span>
+                <span class="video-card__duration">24:15</span>
+              </span>
+              <span class="video-card__kicker">Tutorial · Parque y emisiones</span>
+              <strong>Todos los datos del parque automovilístico que siempre quisiste tener</strong>
+              <span class="video-card__desc">El parque móvil español por provincia, motorización y antigüedad, y la comparación de sus emisiones con las del resto de Europa.</span>
+            </a>
+            <p class="video-card__related">Relacionado: <a href="#parque">03 · Parque</a> · <a href="#co2-europa">05 · CO₂ en Europa</a></p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Análisis del sector -->
+      <div class="video-block">
+        <article class="feature" aria-labelledby="feature-title">
+          <a class="video-card feature__video" href="https://www.youtube.com/watch?v=dMAj68wGyVk" target="_blank" rel="noopener" data-video="dMAj68wGyVk" data-video-title="Análisis del sector automotriz" aria-label="Ver el vídeo: Análisis del sector automotriz">
+            <span class="video-card__thumb">
+              <img src="https://i.ytimg.com/vi/dMAj68wGyVk/hq720.jpg" alt="" width="1280" height="720" loading="lazy">
+              <span class="video-card__play" aria-hidden="true"><svg><use href="#i-play"/></svg></span>
+              <span class="video-card__duration">6:09</span>
+            </span>
+          </a>
+          <div class="feature__text">
+            <p class="eyebrow">En mi canal</p>
+            <h3 class="video-block__title" id="feature-title">Análisis del sector automotriz</h3>
+            <p class="video-block__text">
+              Un repaso al sector del automóvil en España a través de los cuadros de mando interactivos,
+              construidos con microdatos oficiales de la DGT y de la Agencia Europea de Medio Ambiente.
+            </p>
+            <div class="feature__actions">
+              <a class="btn btn--primary" href="https://www.youtube.com/watch?v=dMAj68wGyVk" target="_blank" rel="noopener" data-video="dMAj68wGyVk" data-video-title="Análisis del sector automotriz">
+                <svg aria-hidden="true"><use href="#i-play"/></svg>Ver el vídeo
+              </a>
+              <a class="btn btn--ghost" href="https://drive.google.com/uc?export=download&amp;id=1NDiv1Eud9rDPWWgnvsKu3NapMlDfu42c" rel="noopener">
+                <svg aria-hidden="true"><use href="#i-download"/></svg>Informe en PDF
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Tutoriales -->
+      <div class="video-block">
+        <div class="video-block__head">
+          <div>
+            <p class="eyebrow">Tutoriales</p>
+            <h3 class="video-block__title">Cómo usar los cuadros de mando</h3>
+            <p class="video-block__text">
+              Recorridos guiados: qué muestra cada cuadro de mando, cómo navegar entre ellos y cómo sacarles partido
+              en Tableau Public.
+            </p>
+          </div>
+          <a class="btn btn--ghost" href="https://www.youtube.com/playlist?list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-youtube"/></svg>Lista completa
+          </a>
+        </div>
+        <ol class="videos">
+          <li><a class="video-card" href="https://www.youtube.com/watch?v=aZVMjHhMxs8&amp;list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-video="aZVMjHhMxs8" data-video-title="Introducción a los cuadros de mando">
+            <span class="video-card__thumb"><img src="https://i.ytimg.com/vi/aZVMjHhMxs8/hqdefault.jpg" alt="" width="480" height="360" loading="lazy"><span class="video-card__play" aria-hidden="true"><svg><use href="#i-play"/></svg></span></span>
+            <span class="video-card__num">00</span><strong>Introducción a los cuadros de mando</strong>
+          </a></li>
+          <li><a class="video-card" href="https://www.youtube.com/watch?v=NUi1yVtjKik&amp;list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-video="NUi1yVtjKik" data-video-title="Matriculaciones de turismos: análisis YTD">
+            <span class="video-card__thumb"><img src="https://i.ytimg.com/vi/NUi1yVtjKik/hqdefault.jpg" alt="" width="480" height="360" loading="lazy"><span class="video-card__play" aria-hidden="true"><svg><use href="#i-play"/></svg></span></span>
+            <span class="video-card__num">01</span><strong>Matriculaciones de turismos: análisis YTD</strong>
+          </a></li>
+          <li><a class="video-card" href="https://www.youtube.com/watch?v=PxlBhBnZQww&amp;list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-video="PxlBhBnZQww" data-video-title="Matriculaciones de turismos: resto de cuadros de mando">
+            <span class="video-card__thumb"><img src="https://i.ytimg.com/vi/PxlBhBnZQww/hqdefault.jpg" alt="" width="480" height="360" loading="lazy"><span class="video-card__play" aria-hidden="true"><svg><use href="#i-play"/></svg></span></span>
+            <span class="video-card__num">02</span><strong>Matriculaciones de turismos: resto de cuadros</strong>
+          </a></li>
+          <li><a class="video-card" href="https://www.youtube.com/watch?v=Z9wNMkbIz1A&amp;list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-video="Z9wNMkbIz1A" data-video-title="Matriculaciones exceptuando turismos y todoterrenos">
+            <span class="video-card__thumb"><img src="https://i.ytimg.com/vi/Z9wNMkbIz1A/hqdefault.jpg" alt="" width="480" height="360" loading="lazy"><span class="video-card__play" aria-hidden="true"><svg><use href="#i-play"/></svg></span></span>
+            <span class="video-card__num">03</span><strong>Matriculaciones del resto de vehículos</strong>
+          </a></li>
+          <li><a class="video-card" href="https://www.youtube.com/watch?v=QEQqzFpberQ&amp;list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-video="QEQqzFpberQ" data-video-title="Parque automovilístico de España">
+            <span class="video-card__thumb"><img src="https://i.ytimg.com/vi/QEQqzFpberQ/hqdefault.jpg" alt="" width="480" height="360" loading="lazy"><span class="video-card__play" aria-hidden="true"><svg><use href="#i-play"/></svg></span></span>
+            <span class="video-card__num">04</span><strong>Parque automovilístico de España</strong>
+          </a></li>
+          <li><a class="video-card" href="https://www.youtube.com/watch?v=NdS7QbAPW20&amp;list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-video="NdS7QbAPW20" data-video-title="Botones de navegación">
+            <span class="video-card__thumb"><img src="https://i.ytimg.com/vi/NdS7QbAPW20/hqdefault.jpg" alt="" width="480" height="360" loading="lazy"><span class="video-card__play" aria-hidden="true"><svg><use href="#i-play"/></svg></span></span>
+            <span class="video-card__num">05</span><strong>Botones de navegación</strong>
+          </a></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REFERIDOS ============ -->
+  <section class="section section--tinted" id="referidos" aria-labelledby="referidos-title">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Mis referidos</p>
+        <h2 class="section__title" id="referidos-title">Coche eléctrico y <em>energía solar</em></h2>
+        <p class="section__lead">
+          Los coches eléctricos y las energías renovables no son solo el tema de mis análisis. Si estás pensando en
+          dar el paso, puedes hacerlo con mis enlaces de referido.
+        </p>
+      </header>
+
+      <ul class="referrals">
+        <li class="referral">
+          <span class="referral__icon" aria-hidden="true"><svg><use href="#i-car"/></svg></span>
+          <p class="eyebrow">Coche eléctrico</p>
+          <h3 class="referral__title">Tesla</h3>
+          <p class="referral__text">
+            ¿Vas a comprar un Tesla? Hazlo con mi enlace de referido y accede a las ventajas que ofrezca en ese
+            momento el programa de referidos de Tesla.
+          </p>
+          <div class="referral__code">
+            <span>Código de referido <b>asier515098</b></span>
+            <button type="button" class="copy-btn" data-copy="asier515098">
+              <svg aria-hidden="true"><use href="#i-copy"/></svg><span data-copy-label aria-live="polite">Copiar</span><span class="visually-hidden"> código de Tesla</span>
+            </button>
+          </div>
+          <a class="btn btn--primary referral__cta" href="https://www.tesla.com/es_es/referral/asier515098" target="_blank" rel="sponsored noopener">
+            Usar mi enlace de Tesla<svg aria-hidden="true"><use href="#i-ext"/></svg>
+          </a>
+        </li>
+        <li class="referral">
+          <span class="referral__icon" aria-hidden="true"><svg><use href="#i-sun"/></svg></span>
+          <p class="eyebrow">Electricidad 100&nbsp;% solar</p>
+          <h3 class="referral__title">Imagina Energía</h3>
+          <p class="referral__text">
+            Compañía de luz con energía 100&nbsp;% solar procedente de plantas fotovoltaicas españolas. Contrata con
+            mi enlace de su Plan Amigo y aprovecha las condiciones vigentes del programa.
+          </p>
+          <a class="btn btn--primary referral__cta" href="https://imag.ly/2zKCoN" target="_blank" rel="sponsored noopener">
+            Usar mi enlace de Imagina<svg aria-hidden="true"><use href="#i-ext"/></svg>
+          </a>
+        </li>
+      </ul>
+      <p class="referrals__note">
+        Son enlaces de referido: si los usas, puedo recibir una recompensa. Las ventajas y condiciones las fija cada
+        empresa y pueden cambiar.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="section contact" id="contacto" aria-labelledby="contacto-title">
+    <div class="wrap contact__grid">
+      <div>
+        <p class="eyebrow">Contacto</p>
+        <h2 class="section__title" id="contacto-title">¿Hablamos de <em>datos</em>?</h2>
+        <p class="section__lead">
+          Si te interesa alguno de estos análisis, quieres proponerme una colaboración o simplemente comentar las
+          cifras del sector, escríbeme por email, en LinkedIn o en Bluesky.
+        </p>
+      </div>
+      <ul class="contact__links">
+        <li class="contact-item--copy">
+          <a class="contact-card" href="mailto:asierlizarraga@gmail.com">
+            <svg aria-hidden="true"><use href="#i-mail"/></svg>
+            <span><strong>Email</strong><span>asierlizarraga@gmail.com</span></span>
+          </a>
+          <button type="button" class="copy-btn" data-copy="asierlizarraga@gmail.com">
+            <svg aria-hidden="true"><use href="#i-copy"/></svg><span data-copy-label aria-live="polite">Copiar</span><span class="visually-hidden"> email</span>
+          </button>
+        </li>
+        <li><a class="contact-card" href="https://www.linkedin.com/in/asierlizarraga/" target="_blank" rel="noopener">
+          <svg aria-hidden="true"><use href="#i-linkedin"/></svg>
+          <span><strong>LinkedIn</strong><span>/in/asierlizarraga</span></span>
+          <svg class="contact-card__ext" aria-hidden="true"><use href="#i-ext"/></svg>
+        </a></li>
+        <li><a class="contact-card" href="https://bsky.app/profile/asierliz.bsky.social" target="_blank" rel="noopener">
+          <svg aria-hidden="true"><use href="#i-bluesky"/></svg>
+          <span><strong>Bluesky</strong><span>@asierliz.bsky.social</span></span>
+          <svg class="contact-card__ext" aria-hidden="true"><use href="#i-ext"/></svg>
+        </a></li>
+        <li><a class="contact-card" href="https://public.tableau.com/app/profile/asierlizarraga/vizzes" target="_blank" rel="noopener">
+          <svg aria-hidden="true"><use href="#i-tableau"/></svg>
+          <span><strong>Tableau Public</strong><span>asierlizarraga</span></span>
+          <svg class="contact-card__ext" aria-hidden="true"><use href="#i-ext"/></svg>
+        </a></li>
+        <li><a class="contact-card" href="https://www.youtube.com/playlist?list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener">
+          <svg aria-hidden="true"><use href="#i-youtube"/></svg>
+          <span><strong>YouTube</strong><span>Cuadros de mando Tableau Public</span></span>
+          <svg class="contact-card__ext" aria-hidden="true"><use href="#i-ext"/></svg>
+        </a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <p>© <span data-year>2026</span> Asier Lizarraga</p>
+    <p>Datos: DGT y Agencia Europea de Medio Ambiente · Cuadros de mando alojados en Tableau Public</p>
+  </div>
+</footer>
+
+<dialog class="modal" id="video-modal" aria-labelledby="video-modal-title">
+  <div class="modal__inner">
+    <div class="modal__head">
+      <p class="modal__title" id="video-modal-title">Vídeo</p>
+      <a class="modal__yt" href="https://www.youtube.com/playlist?list=PL2wv0OdWro0Xp1sH6f6H16GAOawf7PDQj" target="_blank" rel="noopener" data-modal-yt>
+        Ver en YouTube<svg aria-hidden="true"><use href="#i-ext"/></svg>
+      </a>
+      <button type="button" class="modal__close" data-modal-close>
+        <svg aria-hidden="true"><use href="#i-close"/></svg><span class="visually-hidden">Cerrar</span>
+      </button>
+    </div>
+    <div class="modal__video">
+      <iframe title="Vídeo de YouTube" src="about:blank" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+  </div>
+</dialog>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
