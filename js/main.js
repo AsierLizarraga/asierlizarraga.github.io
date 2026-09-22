@@ -1,13 +1,30 @@
 (() => {
   'use strict';
 
-  const EMBED_PARAMS = [
-    ':embed=y', ':showVizHome=no', ':display_count=n', ':tabs=n',
-    ':toolbar=yes', ':device=desktop', ':language=es-ES'
-  ].join('&');
+  // Textos que genera el JavaScript. Si por lo que sea no cargara js/i18n.js,
+  // se usan los del castellano.
+  const FALLBACK = {
+    'ui.copy': 'Copiar',
+    'ui.copied': 'Copiado',
+    'ui.copyFailed': 'No se pudo copiar',
+    'modal.title': 'Vídeo',
+    'modal.frameTitle': 'Vídeo de YouTube: {title}',
+    'viz.frameTitle': 'Cuadro de mando de Tableau: {tab} — {title}'
+  };
+  const tr = (key, vars) => {
+    if (window.i18n) return window.i18n.t(key, vars);
+    const text = FALLBACK[key] || key;
+    return vars ? text.replace(/\{(\w+)\}/g, (m, name) => (name in vars ? vars[name] : m)) : text;
+  };
+
+  // Tableau tiene su propia interfaz traducida; el euskera no está entre sus idiomas.
+  const tableauLang = () =>
+    (window.I18N && window.i18n && window.I18N.tableau[window.i18n.lang]) || 'es-ES';
 
   const embedUrl = (workbook, sheet) =>
-    `https://public.tableau.com/views/${workbook}/${sheet}?${EMBED_PARAMS}`;
+    `https://public.tableau.com/views/${workbook}/${sheet}` +
+    `?:embed=y&:showVizHome=no&:display_count=n&:tabs=n&:toolbar=yes&:device=desktop` +
+    `&:language=${tableauLang()}`;
   const publicUrl = (profile, workbook, sheet) =>
     `https://public.tableau.com/app/profile/${profile}/viz/${workbook}/${sheet}`;
 
@@ -22,6 +39,7 @@
   const setMenu = (open) => {
     header.classList.toggle('is-open', open);
     navToggle.setAttribute('aria-expanded', String(open));
+    if (open && window.i18n) window.i18n.closeMenu();
   };
   navToggle.addEventListener('click', () => setMenu(!header.classList.contains('is-open')));
   document.querySelectorAll('.site-nav a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
@@ -120,7 +138,7 @@
       const sheet = tab.dataset.sheet;
       desc.textContent = tab.dataset.desc || '';
       openLink.href = publicUrl(viz.dataset.profile, workbook, sheet);
-      frame.title = `Cuadro de mando de Tableau: ${tab.textContent.trim()} — ${viz.dataset.title}`;
+      frame.title = tr('viz.frameTitle', { tab: tab.textContent.trim(), title: viz.dataset.title });
 
       const src = embedUrl(workbook, sheet);
       if (frame.getAttribute('src') !== src) {
@@ -128,6 +146,10 @@
         frame.src = src;
       }
     }
+
+    const currentTab = () => tabs.find((t) => t.getAttribute('aria-selected') === 'true') || tabs[0];
+    select(currentTab());
+    document.addEventListener('i18n:change', () => select(currentTab()));
 
     tabs.forEach((tab, i) => {
       tab.addEventListener('click', () => select(tab));
@@ -181,10 +203,10 @@
       e.preventDefault();
       const id = trigger.dataset.video;
       const start = Number(trigger.dataset.videoStart) || 0;
-      const title = trigger.dataset.videoTitle || 'Vídeo';
+      const title = trigger.dataset.videoTitle || tr('modal.title');
       modalTitle.textContent = title;
       modalYouTube.href = trigger.href || `https://www.youtube.com/watch?v=${id}`;
-      modalFrame.title = `Vídeo de YouTube: ${title}`;
+      modalFrame.title = tr('modal.frameTitle', { title });
       modalFrame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0${start ? `&start=${start}` : ''}`;
       modal.showModal();
     });
@@ -216,23 +238,25 @@
   document.querySelectorAll('[data-copy]').forEach((btn) => {
     const label = btn.querySelector('[data-copy-label]');
     const icon = btn.querySelector('use');
-    const original = label.textContent;
     let resetTimer;
+    const reset = () => {
+      clearTimeout(resetTimer);
+      label.textContent = tr('ui.copy');
+      icon.setAttribute('href', '#i-copy');
+      btn.classList.remove('is-copied');
+    };
     btn.addEventListener('click', async () => {
       clearTimeout(resetTimer);
       if (await copyText(btn.dataset.copy)) {
-        label.textContent = 'Copiado';
+        label.textContent = tr('ui.copied');
         icon.setAttribute('href', '#i-check');
         btn.classList.add('is-copied');
       } else {
-        label.textContent = 'No se pudo copiar';
+        label.textContent = tr('ui.copyFailed');
       }
-      resetTimer = setTimeout(() => {
-        label.textContent = original;
-        icon.setAttribute('href', '#i-copy');
-        btn.classList.remove('is-copied');
-      }, 2000);
+      resetTimer = setTimeout(reset, 2000);
     });
+    document.addEventListener('i18n:change', reset);
   });
 
   /* ---------- Año del pie ---------- */
