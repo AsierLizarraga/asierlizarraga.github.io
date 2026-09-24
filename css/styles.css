@@ -53,6 +53,19 @@
   }
 }
 
+/* ---------- Idiomas ---------- */
+/* Chino: Public Sans no tiene caracteres CJK, así que se nombran las fuentes del
+   sistema que sí los tienen (macOS, Windows, Android/Linux), y se quita el
+   espaciado negativo de los titulares, que junta demasiado los caracteres. */
+:root:lang(zh) {
+  --font: "Public Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", system-ui, sans-serif;
+}
+:lang(zh) .section__title, :lang(zh) .dash__title, :lang(zh) .doc__title, :lang(zh) .video-block__title { letter-spacing: 0; }
+:lang(zh) body { line-height: 1.7; }
+
+/* Alemán: las palabras compuestas largas se parten con guion en columnas estrechas. */
+:lang(de) main { hyphens: auto; }
+
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -245,6 +258,24 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
   .site-nav a { padding: .8rem 0; border-bottom: 1px solid var(--line); }
   .site-nav a[aria-current="true"]::after { display: none; }
   .site-nav .site-nav__cta { margin-top: 1rem; text-align: center; border: 1px solid var(--line-strong); }
+}
+
+/* En euskera y catalán las etiquetas del menú no caben en una línea hasta unos
+   1250 px, así que en esos dos idiomas el menú se pliega antes. */
+@media (min-width: 1141px) and (max-width: 1280px) {
+  :root:is(:lang(eu), :lang(ca)) .nav-toggle { display: grid; }
+  :root:is(:lang(eu), :lang(ca)) .site-nav {
+    position: absolute; top: var(--header-h); left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    padding: .25rem var(--gutter) 1.25rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    display: none;
+  }
+  :root:is(:lang(eu), :lang(ca)) .site-header.is-open .site-nav { display: flex; }
+  :root:is(:lang(eu), :lang(ca)) .site-nav a { padding: .8rem 0; border-bottom: 1px solid var(--line); }
+  :root:is(:lang(eu), :lang(ca)) .site-nav a[aria-current="true"]::after { display: none; }
+  :root:is(:lang(eu), :lang(ca)) .site-nav .site-nav__cta { margin-top: 1rem; text-align: center; border: 1px solid var(--line-strong); }
 }
 
 @media (max-width: 400px) {

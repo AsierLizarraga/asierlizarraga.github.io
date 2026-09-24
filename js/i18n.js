@@ -1,16 +1,33 @@
-/* Selección de idioma (castellano, inglés y euskera).
+/* Selección de idioma.
    El castellano es el que está escrito en index.html: al cargar se guarda una
    copia del contenido original y las otras lenguas se aplican encima.
    Cada texto traducible lleva data-i18n="clave" (contenido) o
-   data-i18n-attrs="atributo=clave|atributo=clave" (atributos). */
+   data-i18n-attrs="atributo=clave|atributo=clave" (atributos).
+   Los diccionarios están en js/lang/<idioma>.js y solo se descargan cuando se
+   elige ese idioma, así que quien lee en castellano no descarga ninguno. */
 (() => {
   'use strict';
 
-  const DICT = window.I18N;
-  if (!DICT) return;
+  const CONFIG = {
+    langs: ['es', 'en', 'eu', 'ca', 'fr', 'de', 'zh'],
+    codes: { es: 'ES', en: 'EN', eu: 'EU', ca: 'CA', fr: 'FR', de: 'DE', zh: 'ZH' },
+    htmlLang: { es: 'es', en: 'en', eu: 'eu', ca: 'ca', fr: 'fr', de: 'de', zh: 'zh-Hans' },
+    ogLocale: { es: 'es_ES', en: 'en_US', eu: 'eu_ES', ca: 'ca_ES', fr: 'fr_FR', de: 'de_DE', zh: 'zh_CN' },
+    // Idioma de la interfaz de Tableau: no ofrece euskera ni catalán
+    tableau: { es: 'es-ES', en: 'en-US', eu: 'es-ES', ca: 'es-ES', fr: 'fr-FR', de: 'de-DE', zh: 'zh-CN' },
+    // Textos en castellano que solo usa el JavaScript
+    es: {
+      'ui.copied': 'Copiado',
+      'ui.copyFailed': 'No se pudo copiar',
+      'viz.frameTitle': 'Cuadro de mando de Tableau: {tab} — {title}',
+      'modal.frameTitle': 'Vídeo de YouTube: {title}'
+    }
+  };
 
+  const DICT = window.I18N = Object.assign(window.I18N || {}, CONFIG);
   const LANGS = DICT.langs;
   const STORE_KEY = 'idioma';
+  const LANG_DIR = new URL('lang/', document.currentScript.src);
 
   /* ---------- Elementos traducibles ---------- */
   const nodes = [...document.querySelectorAll('[data-i18n]')];
@@ -72,10 +89,26 @@
 
   const t = (key, vars) => {
     const dict = DICT[lang] || {};
-    let text = key in dict ? dict[key] : base.get(key);
+    let text = key in dict ? dict[key] : (key in DICT.es ? DICT.es[key] : base.get(key));
     if (text == null) return key;
     if (vars) text = text.replace(/\{(\w+)\}/g, (match, name) => (name in vars ? vars[name] : match));
     return text;
+  };
+
+  // Descarga el diccionario de un idioma una sola vez; si falla, se sigue en castellano
+  const pending = {};
+  const load = (code) => {
+    if (code === 'es' || DICT[code]) return Promise.resolve(true);
+    if (!pending[code]) {
+      pending[code] = new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = new URL(`${code}.js`, LANG_DIR).href;
+        script.onload = () => resolve(Boolean(DICT[code]));
+        script.onerror = () => { delete pending[code]; resolve(false); };
+        document.head.append(script);
+      });
+    }
+    return pending[code];
   };
 
   /* ---------- Aplicar ---------- */
@@ -96,8 +129,18 @@
     document.dispatchEvent(new CustomEvent('i18n:change', { detail: { lang } }));
   }
 
+  // Aplica un idioma cuando su diccionario está disponible; devuelve si lo consiguió
+  async function show(next) {
+    const ok = await load(next);
+    if (lang !== next) return false;   // se eligió otro idioma mientras se descargaba
+    if (!ok) lang = 'es';
+    apply();
+    return ok;
+  }
+
   function setLang(next) {
-    if (!supported(next) || next === lang) return;
+    if (!supported(next)) return Promise.resolve(false);
+    if (next === lang && (next === 'es' || DICT[next])) return Promise.resolve(true);
     lang = next;
     stored(next);
     // Si alguien llegó con ?lang=, se mantiene el enlace coherente
@@ -106,7 +149,7 @@
       url.searchParams.set('lang', next);
       history.replaceState(null, '', url);
     }
-    apply();
+    return show(next);
   }
 
   /* ---------- Botón de idioma ---------- */
@@ -166,5 +209,6 @@
     t
   };
 
-  apply();
+  if (lang === 'es') apply();
+  else show(lang);
 })();
